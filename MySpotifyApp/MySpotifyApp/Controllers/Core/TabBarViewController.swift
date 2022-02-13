@@ -12,18 +12,33 @@ class TabBarViewController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        let homeVC      = HomeViewController()
+        let searchVC    = SearchViewController()
+        let LibraryVC   = LibraryViewController()
+        
+        homeVC.title = "Home"
+        searchVC.title = "Search"
+        LibraryVC.title = "Library"
+        
+        homeVC.navigationItem.largeTitleDisplayMode = .always
+        searchVC.navigationItem.largeTitleDisplayMode = .always
+        LibraryVC.navigationItem.largeTitleDisplayMode = .always
+        
+        let homeNav = UINavigationController(rootViewController: homeVC)
+        let searchNav = UINavigationController(rootViewController: searchVC)
+        let LibraryNav = UINavigationController(rootViewController: LibraryVC)
+        
+        homeNav.tabBarItem = UITabBarItem(title: "Home", image: UIImage(systemName: "house"), tag: 1)
+        searchNav.tabBarItem = UITabBarItem(title: "Search", image: UIImage(systemName: "magnifyingglass"),  tag: 1)
+        LibraryNav.tabBarItem = UITabBarItem(title: "Library", image: UIImage(systemName: "music.note.list"),  tag: 1)
+         
+        homeNav.navigationBar.prefersLargeTitles = true
+        searchNav.navigationBar.prefersLargeTitles = true
+        LibraryNav.navigationBar.prefersLargeTitles = true
+        
+        setViewControllers([homeNav, searchNav, LibraryNav], animated: true)
+        
     }
-    
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
