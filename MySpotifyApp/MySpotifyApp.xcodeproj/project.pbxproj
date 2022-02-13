@@ -25,6 +25,10 @@
 		2DEE483D27B9899900B82C0F /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DEE483C27B9899900B82C0F /* AuthManager.swift */; };
 		2DEE483F27B989A800B82C0F /* APICaller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DEE483E27B989A800B82C0F /* APICaller.swift */; };
 		2DEE484127B989B700B82C0F /* HopticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DEE484027B989B700B82C0F /* HopticsManager.swift */; };
+		2DEE484427B98A9A00B82C0F /* Artist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DEE484327B98A9A00B82C0F /* Artist.swift */; };
+		2DEE484627B98AAA00B82C0F /* AudioTrack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DEE484527B98AAA00B82C0F /* AudioTrack.swift */; };
+		2DEE484827B98AB900B82C0F /* Playlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DEE484727B98AB900B82C0F /* Playlist.swift */; };
+		2DEE484A27B98ACA00B82C0F /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DEE484927B98ACA00B82C0F /* UserProfile.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +52,10 @@
 		2DEE483C27B9899900B82C0F /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		2DEE483E27B989A800B82C0F /* APICaller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APICaller.swift; sourceTree = "<group>"; };
 		2DEE484027B989B700B82C0F /* HopticsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HopticsManager.swift; sourceTree = "<group>"; };
+		2DEE484327B98A9A00B82C0F /* Artist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Artist.swift; sourceTree = "<group>"; };
+		2DEE484527B98AAA00B82C0F /* AudioTrack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioTrack.swift; sourceTree = "<group>"; };
+		2DEE484727B98AB900B82C0F /* Playlist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Playlist.swift; sourceTree = "<group>"; };
+		2DEE484927B98ACA00B82C0F /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +91,7 @@
 				2D9C803C27B9824E0071776A /* Resources */,
 				2D9C803B27B982450071776A /* Managers */,
 				2D9C803A27B9823C0071776A /* ViewModels */,
+				2DEE484227B98A0A00B82C0F /* Models */,
 				2D9C803927B982300071776A /* Views */,
 				2D9C803827B982270071776A /* Controllers */,
 				2D9C803227B981A00071776A /* Info.plist */,
@@ -159,6 +168,17 @@
 			path = Other;
 			sourceTree = "<group>";
 		};
+		2DEE484227B98A0A00B82C0F /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				2DEE484727B98AB900B82C0F /* Playlist.swift */,
+				2DEE484527B98AAA00B82C0F /* AudioTrack.swift */,
+				2DEE484327B98A9A00B82C0F /* Artist.swift */,
+				2DEE484927B98ACA00B82C0F /* UserProfile.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -233,16 +253,20 @@
 				2DEE483D27B9899900B82C0F /* AuthManager.swift in Sources */,
 				2DEE483B27B9890200B82C0F /* SearchResultsViewController.swift in Sources */,
 				2DEE483127B988BB00B82C0F /* WelcomeViewController.swift in Sources */,
+				2DEE484827B98AB900B82C0F /* Playlist.swift in Sources */,
 				2DEE484127B989B700B82C0F /* HopticsManager.swift in Sources */,
 				2DEE483527B988CF00B82C0F /* ProfileViewController.swift in Sources */,
 				2DEE482727B987D200B82C0F /* TabBarViewController.swift in Sources */,
 				2D9C802927B9819D0071776A /* HomeViewController.swift in Sources */,
+				2DEE484627B98AAA00B82C0F /* AudioTrack.swift in Sources */,
 				2DEE482F27B988B000B82C0F /* AuthViewController.swift in Sources */,
 				2D9C802527B9819D0071776A /* AppDelegate.swift in Sources */,
+				2DEE484A27B98ACA00B82C0F /* UserProfile.swift in Sources */,
 				2DEE482B27B9880800B82C0F /* LibraryViewController.swift in Sources */,
 				2DEE483927B988EE00B82C0F /* PlayListViewController.swift in Sources */,
 				2D9C802727B9819D0071776A /* SceneDelegate.swift in Sources */,
 				2DEE483727B988E300B82C0F /* PlayerViewController.swift in Sources */,
+				2DEE484427B98A9A00B82C0F /* Artist.swift in Sources */,
 				2DEE483F27B989A800B82C0F /* APICaller.swift in Sources */,
 				2DEE483327B988C500B82C0F /* SettingsViewController.swift in Sources */,
 			);
