@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2D0E1E8327B9D095006708BF /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D0E1E8227B9D095006708BF /* Extensions.swift */; };
 		2D9C802527B9819D0071776A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D9C802427B9819D0071776A /* AppDelegate.swift */; };
 		2D9C802727B9819D0071776A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D9C802627B9819D0071776A /* SceneDelegate.swift */; };
 		2D9C802927B9819D0071776A /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D9C802827B9819D0071776A /* HomeViewController.swift */; };
@@ -32,6 +33,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2D0E1E8227B9D095006708BF /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		2D9C802127B9819D0071776A /* MySpotifyApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MySpotifyApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D9C802427B9819D0071776A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2D9C802627B9819D0071776A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -139,6 +141,7 @@
 				2D9C802427B9819D0071776A /* AppDelegate.swift */,
 				2D9C802627B9819D0071776A /* SceneDelegate.swift */,
 				2D9C802D27B981A00071776A /* Assets.xcassets */,
+				2D0E1E8227B9D095006708BF /* Extensions.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -262,6 +265,7 @@
 				2DEE482F27B988B000B82C0F /* AuthViewController.swift in Sources */,
 				2D9C802527B9819D0071776A /* AppDelegate.swift in Sources */,
 				2DEE484A27B98ACA00B82C0F /* UserProfile.swift in Sources */,
+				2D0E1E8327B9D095006708BF /* Extensions.swift in Sources */,
 				2DEE482B27B9880800B82C0F /* LibraryViewController.swift in Sources */,
 				2DEE483927B988EE00B82C0F /* PlayListViewController.swift in Sources */,
 				2D9C802727B9819D0071776A /* SceneDelegate.swift in Sources */,
