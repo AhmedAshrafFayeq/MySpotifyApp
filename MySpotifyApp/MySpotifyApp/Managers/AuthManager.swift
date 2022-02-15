@@ -12,11 +12,19 @@ class AuthManager {
     static let shared = AuthManager()
     
     struct Constants{
-        static let ClientID = "a8c0410ca32145348527d31c05eb4229"
-        static let ClientSecret = "0e29c6ed26d4468aaba5fe9c2cbce9fa"
+        static let clientID = "a8c0410ca32145348527d31c05eb4229"
+        static let clientSecret = "0e29c6ed26d4468aaba5fe9c2cbce9fa"
     }
     
     private init(){}
+
+    public var signInURL: URL?{
+        let redirectURI = "http://localhost:8888/callback";
+        let scope = "user-read-private"
+        let base = "https://accounts.spotify.com/authorize"
+        let string = "\(base)?response_type=code&client_id=\(Constants.clientID)&scope=\(scope)&redirect_uri=\(redirectURI)"
+        return URL(string: string)
+    }
     
     var isSignedIn: Bool{
         return false
