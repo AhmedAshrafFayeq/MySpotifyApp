@@ -22,7 +22,7 @@ class AuthManager {
         let redirectURI = "http://localhost:8888/callback";
         let scope = "user-read-private"
         let base = "https://accounts.spotify.com/authorize"
-        let string = "\(base)?response_type=code&client_id=\(Constants.clientID)&scope=\(scope)&redirect_uri=\(redirectURI)"
+        let string = "\(base)?response_type=code&client_id=\(Constants.clientID)&scope=\(scope)&redirect_uri=\(redirectURI)&show_dialoge=TRUE"
         return URL(string: string)
     }
     
