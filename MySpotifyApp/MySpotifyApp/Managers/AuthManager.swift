@@ -45,4 +45,15 @@ class AuthManager {
     private var shouldRefreshToken: Bool {
         return false
     }
+    
+    public func exchangeCodeForToken (code: String, completion: @escaping ((Bool)-> Void)){
+        // Get Token
+    }
+    
+    public func refreshAccessToken(){
+        
+    }
+    
+    private func cacheToken(){
+    }
 }
