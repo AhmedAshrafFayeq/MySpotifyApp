@@ -51,8 +51,18 @@ class AuthManager {
     public func exchangeCodeForToken (code: String, completion: @escaping ((Bool)-> Void)){
         // Get Token
         guard let url = URL(string: Constants.tokenAPIURL) else {return}
+        
+        var components = URLComponents()
+        components.queryItems = [
+            URLQueryItem(name: "grant_type", value: "authorization_code"),
+            URLQueryItem(name: "code", value: code),
+            URLQueryItem(name: "redirect_uri", value: "http://localhost:8888/callback")
+        ]
+        
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
+        request.httpBody = components.query?.data(using: .utf8)
+        
         URLSession.shared.dataTask(with: request) { data, _, error in
             guard let data = data, error == nil else {
                 completion(false)
