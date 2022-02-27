@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct AuthResponse{
+struct AuthResponse: Codable{
     let access_token: String
     let expires_in: String
     let refresh_token: String

@@ -71,15 +71,15 @@ class AuthManager {
             return
         }
         request.setValue("Basic \(base64String)", forHTTPHeaderField: "Authorization")
-        URLSession.shared.dataTask(with: request) { data, _, error in
+        URLSession.shared.dataTask(with: request) { [weak self] data, _, error in
+            guard let self = self else {return}
             guard let data = data, error == nil else {
                 completion(false)
                 return
             }
             do {
-                let json = try JSONSerialization.jsonObject(with: data, options: .fragmentsAllowed)
-                print("SUCCESS: \(json)")
-                completion(true)
+                let result = try JSONDecoder().decode(AuthResponse.self, from: data)
+                self.cacheToken(result: result)
             }catch{
                 print(error.localizedDescription)
                 completion(false)
@@ -91,6 +91,9 @@ class AuthManager {
         
     }
     
-    private func cacheToken(){
+    private func cacheToken(result: AuthResponse){
+        UserDefaults.standard.setValue(result.access_token, forKey: "access_token")
+        UserDefaults.standard.setValue(result.refresh_token, forKey: "refresh_token")
+        UserDefaults.standard.setValue(Date().addingTimeInterval(TimeInterval(result.expires_in)!), forKey: "expiration")
     }
 }
