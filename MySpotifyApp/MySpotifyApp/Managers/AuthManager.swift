@@ -79,12 +79,11 @@ class AuthManager {
             do {
                 let json = try JSONSerialization.jsonObject(with: data, options: .fragmentsAllowed)
                 print("SUCCESS: \(json)")
+                completion(true)
             }catch{
                 print(error.localizedDescription)
                 completion(false)
             }
-            
-            
         }.resume()
     }
     
