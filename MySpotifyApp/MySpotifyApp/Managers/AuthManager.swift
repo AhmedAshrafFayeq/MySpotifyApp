@@ -33,19 +33,24 @@ class AuthManager {
     }
     
     private var accessToken: String? {
-        return nil
+        return UserDefaults.standard.string(forKey: "access_token")
     }
     
     private var refreshToken: String? {
-        return nil
+        return UserDefaults.standard.string(forKey: "refresh_token")
     }
     
     private var tokenExpirationDate: Date? {
-        return nil
+        return UserDefaults.standard.object(forKey: "expiration") as? Date
     }
     
     private var shouldRefreshToken: Bool {
-        return false
+        guard let expirationDate = tokenExpirationDate else {
+            return false
+        }
+        let currentDate = Date()
+        let fiveMins: TimeInterval = 300
+        return currentDate.addingTimeInterval(fiveMins) >= expirationDate
     }
     
     public func exchangeCodeForToken (code: String, completion: @escaping ((Bool)-> Void)){
