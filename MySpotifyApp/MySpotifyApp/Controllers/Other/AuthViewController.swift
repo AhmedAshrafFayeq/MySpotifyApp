@@ -44,7 +44,7 @@ class AuthViewController: UIViewController,WKNavigationDelegate {
         guard let code = URLComponents(string: url.absoluteString)?.queryItems?.first(where: { $0.name == "code"})?.value else{
             return
         }
-        
+        webView.isHidden = true 
         print("Code \(code)")
         AuthManager.shared.exchangeCodeForToken(code: code) { [weak self] success in
             guard let self = self else {return}
