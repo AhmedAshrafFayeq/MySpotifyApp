@@ -21,10 +21,10 @@ class AuthManager {
     private init(){}
 
     public var signInURL: URL?{
-        let redirectURI = "http://localhost:8888/callback";
+        let redirectURI = "https://www.iosacademy.io";
         let scope = "user-read-private"
         let base = "https://accounts.spotify.com/authorize"
-        let string = "\(base)?response_type=code&client_id=\(Constants.clientID)&scope=\(scope)&redirect_uri=\(redirectURI)&show_dialoge=TRUE"
+        let string = "\(base)?response_type=code&client_id=\(Constants.clientID)&scope=\(scope)&redirect_uri=\(redirectURI)&show_dialog=TRUE"
         return URL(string: string)
     }
     
@@ -61,13 +61,14 @@ class AuthManager {
         components.queryItems = [
             URLQueryItem(name: "grant_type", value: "authorization_code"),
             URLQueryItem(name: "code", value: code),
-            URLQueryItem(name: "redirect_uri", value: "http://localhost:8888/callback")
+            URLQueryItem(name: "redirect_uri", value: "https://www.iosacademy.io")
         ]
         
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.httpBody = components.query?.data(using: .utf8)
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        
         let basicToken = Constants.clientID + ":" + Constants.clientSecret
         let data = basicToken.data(using: .utf8)
         guard let base64String = data?.base64EncodedString() else {
@@ -76,6 +77,7 @@ class AuthManager {
             return
         }
         request.setValue("Basic \(base64String)", forHTTPHeaderField: "Authorization")
+        
         URLSession.shared.dataTask(with: request) { [weak self] data, _, error in
             guard let self = self else {return}
             guard let data = data, error == nil else {
@@ -85,6 +87,7 @@ class AuthManager {
             do {
                 let result = try JSONDecoder().decode(AuthResponse.self, from: data)
                 self.cacheToken(result: result)
+                completion(true)
             }catch{
                 print(error.localizedDescription)
                 completion(false)
