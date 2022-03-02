@@ -11,6 +11,7 @@ import UIKit
 class AuthManager {
     
     static let shared = AuthManager()
+    private var refreshingToken = false
     
     struct Constants{
         static let clientID = "a8c0410ca32145348527d31c05eb4229"
@@ -96,15 +97,36 @@ class AuthManager {
         }.resume()
     }
     
+    public func withValidToken(completion: @escaping (String) -> Void){
+        if shouldRefreshToken {
+            //Refresh
+            refreshIfNeeded { [weak self] success in
+                guard let self = self else { return }
+                if let token = self.accessToken, success {
+                    completion(token)
+                }
+            }
+        }
+        else if let token = accessToken {
+            completion(token)
+        }
+    }
+    
     public func refreshIfNeeded(completion: @escaping (Bool) -> Void){
+        
+        guard !refreshingToken else { return }
+        
         guard shouldRefreshToken else {
             completion(true)
             return
         }
+        
         guard let refreshToken = refreshToken else { return }
         
         //refresh the Token
         guard let url = URL(string: Constants.tokenAPIURL) else { return }
+        
+        refreshingToken = true
         
         var components = URLComponents()
         components.queryItems = [
