@@ -99,6 +99,7 @@ class AuthManager {
     
     private var onRefreshBlocks = [((String) -> Void)]()
         
+    ///Suplies valid token to be used with API calls
     public func withValidToken(completion: @escaping (String) -> Void){
         guard !refreshingToken else {
             //append the completion
