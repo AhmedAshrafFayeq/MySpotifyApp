@@ -97,7 +97,15 @@ class AuthManager {
         }.resume()
     }
     
+    private var onRefreshBlocks = [((String) -> Void)]()
+        
     public func withValidToken(completion: @escaping (String) -> Void){
+        guard !refreshingToken else {
+            //append the completion
+            onRefreshBlocks.append(completion)
+            return
+        }
+        
         if shouldRefreshToken {
             //Refresh
             refreshIfNeeded { [weak self] success in
@@ -150,13 +158,16 @@ class AuthManager {
         
         URLSession.shared.dataTask(with: request) { [weak self] data, _, error in
             guard let self = self else {return}
+            self.refreshingToken = false
             guard let data = data, error == nil else {
                 completion(false)
                 return
             }
             do {
                 let result = try JSONDecoder().decode(AuthResponse.self, from: data)
-                print("Horraaayyy successfully refreshed")
+                print("Horraaayyy successfully refreshed 💃💃")
+                self.onRefreshBlocks.forEach { $0(result.access_token)}
+                self.onRefreshBlocks.removeAll()
                 self.cacheToken(result: result)
                 completion(true)
             }catch{
