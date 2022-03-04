@@ -26,6 +26,4 @@ class HomeViewController: UIViewController {
         profileViewController.navigationItem.largeTitleDisplayMode = .never
         navigationController?.pushViewController(profileViewController, animated: true)
     }
-
 }
-
