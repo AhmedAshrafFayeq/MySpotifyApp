@@ -44,7 +44,7 @@ struct ExternalUrls: Codable {
 
 // MARK: - Followers
 struct Followers: Codable {
-    let href: String
+    let href: String?
     let total: Int
 }
 
