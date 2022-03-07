@@ -29,7 +29,7 @@ struct UserProfile: Codable {
 
 // MARK: - ExplicitContent
 struct ExplicitContent: Codable {
-    let filterEnabled, filterLocked: Bool
+    let filterEnabled, filterLocked: Bool?
 
     enum CodingKeys: String, CodingKey {
         case filterEnabled = "filter_enabled"
@@ -39,17 +39,17 @@ struct ExplicitContent: Codable {
 
 // MARK: - ExternalUrls
 struct ExternalUrls: Codable {
-    let spotify: String
+    let spotify: String?
 }
 
 // MARK: - Followers
 struct Followers: Codable {
     let href: String?
-    let total: Int
+    let total: Int?
 }
 
 // MARK: - Image
 struct Image: Codable {
-    let url: String
-    let height, width: Int
+    let url: String?
+    let height, width: Int?
 }
