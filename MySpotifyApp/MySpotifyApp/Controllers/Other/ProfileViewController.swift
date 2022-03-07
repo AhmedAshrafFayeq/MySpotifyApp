@@ -69,8 +69,9 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         imageView.center = headerView.center
         imageView.contentMode = .scaleAspectFill
         imageView.sd_setImage(with: url)
+        imageView.layer.masksToBounds = true
+        imageView.layer.cornerRadius = imageSize/2
         tableView.tableHeaderView = headerView
-        
     }
     
     private func failedToGetProfile() {
