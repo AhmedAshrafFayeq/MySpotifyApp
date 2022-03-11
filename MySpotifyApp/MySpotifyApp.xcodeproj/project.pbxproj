@@ -16,6 +16,7 @@
 		2D9C802E27B981A00071776A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2D9C802D27B981A00071776A /* Assets.xcassets */; };
 		2D9C803127B981A00071776A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2D9C802F27B981A00071776A /* LaunchScreen.storyboard */; };
 		2DB0FFB927CBD4B50042934C /* AuthResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB0FFB827CBD4B50042934C /* AuthResponse.swift */; };
+		2DED869D27DBF07C00F9095A /* NewReleasesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DED869C27DBF07C00F9095A /* NewReleasesResponse.swift */; };
 		2DEE482727B987D200B82C0F /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DEE482627B987D200B82C0F /* TabBarViewController.swift */; };
 		2DEE482927B987F800B82C0F /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DEE482827B987F800B82C0F /* SearchViewController.swift */; };
 		2DEE482B27B9880800B82C0F /* LibraryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DEE482A27B9880800B82C0F /* LibraryViewController.swift */; };
@@ -46,6 +47,7 @@
 		2D9C803027B981A00071776A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2D9C803227B981A00071776A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2DB0FFB827CBD4B50042934C /* AuthResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthResponse.swift; sourceTree = "<group>"; };
+		2DED869C27DBF07C00F9095A /* NewReleasesResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewReleasesResponse.swift; sourceTree = "<group>"; };
 		2DEE482627B987D200B82C0F /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		2DEE482827B987F800B82C0F /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		2DEE482A27B9880800B82C0F /* LibraryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryViewController.swift; sourceTree = "<group>"; };
@@ -191,6 +193,7 @@
 				2DEE484927B98ACA00B82C0F /* UserProfile.swift */,
 				2DB0FFB827CBD4B50042934C /* AuthResponse.swift */,
 				2D7418E927D3FBE800B98EAC /* SettingsModels.swift */,
+				2DED869C27DBF07C00F9095A /* NewReleasesResponse.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -201,7 +204,6 @@
 				94B8A21622C92C40DA65918F /* Pods-MySpotifyApp.debug.xcconfig */,
 				4BC8E0C3316681B8883806A4 /* Pods-MySpotifyApp.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -336,6 +338,7 @@
 				2DEE483527B988CF00B82C0F /* ProfileViewController.swift in Sources */,
 				2DEE482727B987D200B82C0F /* TabBarViewController.swift in Sources */,
 				2DB0FFB927CBD4B50042934C /* AuthResponse.swift in Sources */,
+				2DED869D27DBF07C00F9095A /* NewReleasesResponse.swift in Sources */,
 				2D9C802927B9819D0071776A /* HomeViewController.swift in Sources */,
 				2DEE484627B98AAA00B82C0F /* AudioTrack.swift in Sources */,
 				2DEE482F27B988B000B82C0F /* AuthViewController.swift in Sources */,
