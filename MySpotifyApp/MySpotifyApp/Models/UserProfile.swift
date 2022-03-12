@@ -47,9 +47,3 @@ struct Followers: Codable {
     let href: String?
     let total: Int?
 }
-
-// MARK: - Image
-struct Image: Codable {
-    let url: String?
-    let height, width: Int?
-}
