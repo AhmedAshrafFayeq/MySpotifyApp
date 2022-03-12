@@ -14,13 +14,7 @@ struct NewReleasesResponse: Codable {
 
 // MARK: - Albums
 struct Albums: Codable {
-    let href: String
     let items: [Item]
-    let limit: Int
-    let next: String
-    let offset: Int
-    let previous: String
-    let total: Int
 }
 
 // MARK: - Item
@@ -29,14 +23,14 @@ struct Item: Codable {
     let availableMarkets: [String]
     let id: String
     let images: [Image]?
-    let name, releaseDate, totalTracks: String
-    let artists: [Artist]
+    let name, releaseDate: String
+    let totalTracks: Int
     
     enum CodingKeys: String, CodingKey {
         case albumType = "album_type"
         case availableMarkets = "available_markets"
         case releaseDate = "release_date"
         case totalTracks = "total_tracks"
-        case id, images, name, artists
+        case id, images, name
     }
 }
