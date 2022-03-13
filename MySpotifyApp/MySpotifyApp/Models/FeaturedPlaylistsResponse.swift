@@ -14,12 +14,11 @@ struct FeaturedPlaylistsResponse: Codable{
 
 // MARK: - PlayListResponse
 struct PlayListResponse: Codable{
-    let items: [PlayList]
+    let items: [Playlist]
 }
 
-// MARK: - PlayList
-struct PlayList: Codable{
-    let collaborative: Int
+// MARK: - Playlist
+struct Playlist: Codable{
     let description, id, name: String
     let external_urls: [String: String]
     let images: [Image]

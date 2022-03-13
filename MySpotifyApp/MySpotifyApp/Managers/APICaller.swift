@@ -62,7 +62,7 @@ final class APICaller {
         
     }
     
-    public func getFeaturedPlaylists(completion: @escaping((Result<String, Error>)-> Void)){
+    public func getFeaturedPlaylists(completion: @escaping((Result<FeaturedPlaylistsResponse, Error>)-> Void)){
         createRequest(with: URL(string: Constants.baseAPIURL + "/browse/featured-playlists"), type: .GET) { request in
             URLSession.shared.dataTask(with: request) { data, _, error in
                 guard let data = data, error == nil else {
@@ -70,8 +70,9 @@ final class APICaller {
                     return
                 }
                 do {
-                    let json = try JSONSerialization.jsonObject(with: data, options: .fragmentsAllowed)
-                    print(json)
+                    let result = try JSONDecoder().decode(FeaturedPlaylistsResponse.self, from: data)
+                    print(result)
+                    completion(.success(result))
                 }catch{
                     completion(.failure(error))
                 }
