@@ -76,17 +76,18 @@ final class APICaller {
         }
     }
     
-    public func getRecommendations(genres: Set<String>, completion: @escaping((Result<String, Error>)-> Void)){
+    public func getRecommendations(genres: Set<String>, completion: @escaping((Result<RecommendationResponse, Error>)-> Void)){
         let seeds = genres.joined(separator: ",")
-        createRequest(with: URL(string: Constants.baseAPIURL + "/recommendations?limit=2&seed_genres=\(seeds)"), type: .GET) { request in
+        createRequest(with: URL(string: Constants.baseAPIURL + "/recommendations?limit=40&seed_genres=\(seeds)"), type: .GET) { request in
             URLSession.shared.dataTask(with: request) { data, _, error in
                 guard let data = data, error == nil else {
                     completion(.failure(APIError.failedToGetData))
                     return
                 }
                 do {
-                    let json = try JSONSerialization.jsonObject(with: data, options: .fragmentsAllowed)
-                    print(json)
+                    let result = try JSONDecoder().decode(RecommendationResponse.self, from: data)
+                    print(result)
+                    completion(.success(result))
                 }catch{
                     completion(.failure(error))
                 }
@@ -103,7 +104,6 @@ final class APICaller {
                 }
                 do {
                     let result = try JSONDecoder().decode(RecommendedGenresResponse.self, from: data)
-                    print(result)
                     completion(.success(result))
                 }catch{
                     completion(.failure(error))
