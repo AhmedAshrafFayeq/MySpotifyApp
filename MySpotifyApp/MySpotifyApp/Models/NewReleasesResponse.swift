@@ -9,16 +9,16 @@ import Foundation
 
 // MARK: - NewReleasesResponse
 struct NewReleasesResponse: Codable {
-    let albums: Albums
+    let albums: AlbumResponse
 }
 
 // MARK: - Albums
-struct Albums: Codable {
-    let items: [Item]
+struct AlbumResponse: Codable {
+    let items: [Album]
 }
 
 // MARK: - Item
-struct Item: Codable {
+struct Album: Codable {
     let albumType: String
     let availableMarkets: [String]
     let id: String
