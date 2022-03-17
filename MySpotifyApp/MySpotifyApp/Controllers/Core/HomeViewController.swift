@@ -30,8 +30,8 @@ class HomeViewController: UIViewController {
                                                             style: .done,
                                                             target: self,
                                                             action: #selector(didTapSettings))
-        view.addSubview(spinner)
         configureCollectionView()
+        view.addSubview(spinner)
         fetchData()
         
     }
@@ -57,6 +57,8 @@ class HomeViewController: UIViewController {
             heightDimension: .fractionalHeight(1.0))
         )
         
+        item.contentInsets = NSDirectionalEdgeInsets(top: 2, leading: 2, bottom: 2, trailing: 2)
+        
         // Group
         let group = NSCollectionLayoutGroup.vertical(
             layoutSize: NSCollectionLayoutSize(
@@ -72,9 +74,9 @@ class HomeViewController: UIViewController {
     }
     
     private func fetchData(){
+        // New Releases
         // Featured Playlists
         // Recommended Tracks
-        // New Releases
         APICaller.shared.getRecommendedGenres { result in
             switch result {
             case .success(let model):
