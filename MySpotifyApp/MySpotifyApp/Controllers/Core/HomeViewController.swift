@@ -92,32 +92,31 @@ class HomeViewController: UIViewController {
         case 1:
             // Item
             let item = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(
-                widthDimension: .fractionalWidth(1.0),
-                heightDimension: .fractionalHeight(1.0))
+                widthDimension: .absolute(200),
+                heightDimension: .absolute(200))
             )
             
             item.contentInsets = NSDirectionalEdgeInsets(top: 2, leading: 2, bottom: 2, trailing: 2)
             
-            // Vertical Group in horizontal group
             let verticalGroup = NSCollectionLayoutGroup.vertical(
                 layoutSize: NSCollectionLayoutSize(
-                    widthDimension: .fractionalWidth(1.0),
-                    heightDimension: .absolute(390)
+                    widthDimension: .absolute(200),
+                    heightDimension: .absolute(400)
                 ),
                 subitem: item,
-                count: 3)
+                count: 2)
             
             let horizontalGroup = NSCollectionLayoutGroup.horizontal(
                 layoutSize: NSCollectionLayoutSize(
-                    widthDimension: .fractionalWidth(0.9),
-                    heightDimension: .absolute(390)
+                    widthDimension: .absolute(200),
+                    heightDimension: .absolute(400)
                 ),
                 subitem: verticalGroup,
                 count: 1)
             
             // Section
             let section = NSCollectionLayoutSection(group: horizontalGroup)
-            section.orthogonalScrollingBehavior = .groupPaging
+            section.orthogonalScrollingBehavior = .continuous
             return section
             
         case 2:
@@ -129,26 +128,16 @@ class HomeViewController: UIViewController {
             
             item.contentInsets = NSDirectionalEdgeInsets(top: 2, leading: 2, bottom: 2, trailing: 2)
             
-            // Vertical Group in horizontal group
-            let verticalGroup = NSCollectionLayoutGroup.vertical(
+            let group = NSCollectionLayoutGroup.vertical(
                 layoutSize: NSCollectionLayoutSize(
                     widthDimension: .fractionalWidth(1.0),
-                    heightDimension: .absolute(390)
+                    heightDimension: .absolute(60)
                 ),
                 subitem: item,
-                count: 3)
-            
-            let horizontalGroup = NSCollectionLayoutGroup.horizontal(
-                layoutSize: NSCollectionLayoutSize(
-                    widthDimension: .fractionalWidth(0.9),
-                    heightDimension: .absolute(390)
-                ),
-                subitem: verticalGroup,
                 count: 1)
             
             // Section
-            let section = NSCollectionLayoutSection(group: horizontalGroup)
-            section.orthogonalScrollingBehavior = .groupPaging
+            let section = NSCollectionLayoutSection(group: group)
             return section
             
         default:
