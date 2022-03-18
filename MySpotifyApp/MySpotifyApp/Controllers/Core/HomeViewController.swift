@@ -9,9 +9,9 @@ import UIKit
 
 // enum of the three different types of collectionView cells
 enum BrwoseSectionType{
-    case newRelease(viewModels: [NewReleaseCollectionViewCell])             //1
-    case featuredPlaylists(viewModels: [NewReleaseCollectionViewCell])      //2
-    case recommendedTracks(viewModels: [NewReleaseCollectionViewCell])      //3
+    case newRelease(viewModels: [NewReleasesCellViewModel])             //1
+    case featuredPlaylists(viewModels: [NewReleasesCellViewModel])      //2
+    case recommendedTracks(viewModels: [NewReleasesCellViewModel])      //3
 }
 
 class HomeViewController: UIViewController {
@@ -149,9 +149,18 @@ class HomeViewController: UIViewController {
         tracks:[AudioTrack]
     ) {
         //Congigure Models
-        sections.append(.newRelease(viewModels: []))
+        print(newAlbums.count)
+        print(playlists.count)
+        print(tracks.count)
+        sections.append(.newRelease(viewModels: newAlbums.compactMap({
+            return NewReleasesCellViewModel(name: $0.name,
+                                            artistName: "-",
+                                            artWorkURL: URL(string: $0.images?.first?.url ?? "") ,
+                                            numberOfTracks: $0.totalTracks)
+        })))
         sections.append(.featuredPlaylists(viewModels: []))
         sections.append(.recommendedTracks(viewModels: []))
+        collectionView.reloadData()
     }
     
     @objc func didTapSettings(){
@@ -165,28 +174,55 @@ class HomeViewController: UIViewController {
 extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        5
+        let type = sections[section]
+        switch type{
+        case .newRelease(let viewModel):
+            return viewModel.count
+        case .recommendedTracks(let viewModel):
+            return viewModel.count
+        case .featuredPlaylists(let viewModel):
+            return viewModel.count
+        }
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        3
+        sections.count
     }
     
     
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
-        switch indexPath.section{
-        case 0:
-            cell.backgroundColor = .systemGreen
-        case 1:
-            cell.backgroundColor = .systemPink
-        case 2:
-            cell.backgroundColor = .systemBlue
-        default:
-            cell.backgroundColor = .systemGreen
+       
+        let type = sections[indexPath.section]
+
+        switch type{
+        case .newRelease(let viewModel):
+            guard let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: NewReleaseCollectionViewCell.identifier,
+                for: indexPath) as? NewReleaseCollectionViewCell else { return UICollectionViewCell() }
+
+            let viewModel = viewModel[indexPath.row]
+            cell.backgroundColor = .red
+            return cell
+            
+        case .recommendedTracks(let viewModel):
+            guard let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: RecommendedTrackCollectionViewCell.identifier,
+                for: indexPath) as? RecommendedTrackCollectionViewCell else { return UICollectionViewCell() }
+            cell.backgroundColor = .blue
+            return cell
+            
+        case .featuredPlaylists(let viewModel):
+            guard let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: FeaturedPlaylistCollectionViewCell.identifier,
+                for: indexPath) as? FeaturedPlaylistCollectionViewCell else { return UICollectionViewCell() }
+            cell.backgroundColor = .orange
+            return cell
+            
         }
-        return cell
+        
+        
+        
     }
     
     static func createSectionLayout(section: Int) -> NSCollectionLayoutSection{
