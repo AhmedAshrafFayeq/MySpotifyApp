@@ -20,7 +20,7 @@ class HomeViewController: UIViewController {
         frame: .zero,
         collectionViewLayout: UICollectionViewCompositionalLayout{ sectionIndex, _ -> NSCollectionLayoutSection in
             return HomeViewController.createSectionLayout(section: sectionIndex)
-        } ) 
+        } )
     
     private let spinner: UIActivityIndicatorView = {
         let spinner = UIActivityIndicatorView()
@@ -74,7 +74,7 @@ class HomeViewController: UIViewController {
         
         var newReleases: NewReleasesResponse?
         var featuredPlaylists: FeaturedPlaylistsResponse?
-        var recommended: RecommendationResponse?
+        var recommendations: RecommendationResponse?
         
         // New Releases
         APICaller.shared.getNewReleases { result in
@@ -121,7 +121,7 @@ class HomeViewController: UIViewController {
                     }
                     switch recommendedResult{
                     case .success(let model):
-                        recommended = model
+                        recommendations = model
                     case .failure(let error):
                         print(error.localizedDescription)
                     }
@@ -132,9 +132,22 @@ class HomeViewController: UIViewController {
         }
         
         group.notify(queue: .main) {
+            guard let newAlbums = newReleases?.albums.items,
+                  let playlists = featuredPlaylists?.playlists.items,
+                  let tracks    = recommendations?.tracks else { return }
             
+            self.configureModels(
+                newAlbums: newAlbums,
+                playlists: playlists,
+                tracks: tracks)
         }
-        
+    }
+    
+    private func configureModels(
+        newAlbums:[Album],
+        playlists: [Playlist],
+        tracks:[AudioTrack]
+    ) {
         //Congigure Models
         sections.append(.newRelease(viewModels: []))
         sections.append(.featuredPlaylists(viewModels: []))
