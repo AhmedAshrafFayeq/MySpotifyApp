@@ -7,10 +7,11 @@
 
 import UIKit
 
+// enum of the three different types of collectionView cells
 enum BrwoseSectionType{
-    case newRelease         //1
-    case featuredPlaylists  //2
-    case recommendedTracks  //3
+    case newRelease(viewModels: [NewReleaseCollectionViewCell])             //1
+    case featuredPlaylists(viewModels: [NewReleaseCollectionViewCell])      //2
+    case recommendedTracks(viewModels: [NewReleaseCollectionViewCell])      //3
 }
 
 class HomeViewController: UIViewController {
@@ -27,6 +28,9 @@ class HomeViewController: UIViewController {
         spinner.hidesWhenStopped = true
         return spinner
     }()
+    
+    // to get the number of sections and the data in each section
+    var sections = [BrwoseSectionType]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,16 +55,57 @@ class HomeViewController: UIViewController {
         view.addSubview(collectionView)
         collectionView.register(UICollectionViewCell.self,
                                 forCellWithReuseIdentifier: "cell")
+        collectionView.register(NewReleaseCollectionViewCell.self,
+                                forCellWithReuseIdentifier: NewReleaseCollectionViewCell.identifier)
+        collectionView.register(FeaturedPlaylistCollectionViewCell.self,
+                                forCellWithReuseIdentifier: FeaturedPlaylistCollectionViewCell.identifier)
+        collectionView.register(RecommendedTrackCollectionViewCell.self,
+                                forCellWithReuseIdentifier: RecommendedTrackCollectionViewCell.identifier)
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.backgroundColor = .systemBackground
     }
     
     private func fetchData(){
+        let group = DispatchGroup()
+        group.enter()
+        group.enter()
+        group.enter()
+        
+        var newReleases: NewReleasesResponse?
+        var featuredPlaylists: FeaturedPlaylistsResponse?
+        var recommended: RecommendationResponse?
+        
         // New Releases
+        APICaller.shared.getNewReleases { result in
+            
+            switch result{
+            case .success(let model):
+                newReleases = model
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+        
         // Featured Playlists
+        APICaller.shared.getFeaturedPlaylists { result in
+            defer{
+                group.leave()
+            }
+            switch result{
+            case .success(let model):
+                featuredPlaylists = model
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+        
         // Recommended Tracks
         APICaller.shared.getRecommendedGenres { result in
+            //to be excuted after the scope exit = try/Finally
+            defer{
+                group.leave()
+            }
             switch result {
             case .success(let model):
                 let genres = model.genres
@@ -70,12 +115,30 @@ class HomeViewController: UIViewController {
                         seeds.insert(random)
                     }
                 }
-                APICaller.shared.getRecommendations(genres: seeds) { _ in
+                APICaller.shared.getRecommendations(genres: seeds) { recommendedResult in
+                    defer{
+                        group.leave()
+                    }
+                    switch recommendedResult{
+                    case .success(let model):
+                        recommended = model
+                    case .failure(let error):
+                        print(error.localizedDescription)
+                    }
                     
                 }
             case .failure(_): break
             }
         }
+        
+        group.notify(queue: .main) {
+            
+        }
+        
+        //Congigure Models
+        sections.append(.newRelease(viewModels: []))
+        sections.append(.featuredPlaylists(viewModels: []))
+        sections.append(.recommendedTracks(viewModels: []))
     }
     
     @objc func didTapSettings(){
