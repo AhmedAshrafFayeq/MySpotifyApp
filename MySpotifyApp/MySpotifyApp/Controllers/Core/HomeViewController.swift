@@ -56,7 +56,64 @@ class HomeViewController: UIViewController {
         collectionView.backgroundColor = .systemBackground
     }
     
-    private static func createSectionLayout(section: Int) -> NSCollectionLayoutSection{
+    private func fetchData(){
+        // New Releases
+        // Featured Playlists
+        // Recommended Tracks
+        APICaller.shared.getRecommendedGenres { result in
+            switch result {
+            case .success(let model):
+                let genres = model.genres
+                var seeds = Set<String>()
+                while seeds.count < 5 {
+                    if let random = genres.randomElement(){
+                        seeds.insert(random)
+                    }
+                }
+                APICaller.shared.getRecommendations(genres: seeds) { _ in
+                    
+                }
+            case .failure(_): break
+            }
+        }
+    }
+    
+    @objc func didTapSettings(){
+        let profileViewController = SettingsViewController()
+        profileViewController.title = "Settings"
+        profileViewController.navigationItem.largeTitleDisplayMode = .never
+        navigationController?.pushViewController(profileViewController, animated: true)
+    }
+}
+
+extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        5
+    }
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        3
+    }
+    
+    
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
+        switch indexPath.section{
+        case 0:
+            cell.backgroundColor = .systemGreen
+        case 1:
+            cell.backgroundColor = .systemPink
+        case 2:
+            cell.backgroundColor = .systemBlue
+        default:
+            cell.backgroundColor = .systemGreen
+        }
+        return cell
+    }
+    
+    static func createSectionLayout(section: Int) -> NSCollectionLayoutSection{
         switch section{
         case 0:
             // Item
@@ -131,7 +188,7 @@ class HomeViewController: UIViewController {
             let group = NSCollectionLayoutGroup.vertical(
                 layoutSize: NSCollectionLayoutSize(
                     widthDimension: .fractionalWidth(1.0),
-                    heightDimension: .absolute(60)
+                    heightDimension: .absolute(80)
                 ),
                 subitem: item,
                 count: 1)
@@ -160,62 +217,5 @@ class HomeViewController: UIViewController {
             let section = NSCollectionLayoutSection(group: group)
             return section
         }
-    }
-    
-    private func fetchData(){
-        // New Releases
-        // Featured Playlists
-        // Recommended Tracks
-        APICaller.shared.getRecommendedGenres { result in
-            switch result {
-            case .success(let model):
-                let genres = model.genres
-                var seeds = Set<String>()
-                while seeds.count < 5 {
-                    if let random = genres.randomElement(){
-                        seeds.insert(random)
-                    }
-                }
-                APICaller.shared.getRecommendations(genres: seeds) { _ in
-                    
-                }
-            case .failure(_): break
-            }
-        }
-    }
-    
-    @objc func didTapSettings(){
-        let profileViewController = SettingsViewController()
-        profileViewController.title = "Settings"
-        profileViewController.navigationItem.largeTitleDisplayMode = .never
-        navigationController?.pushViewController(profileViewController, animated: true)
-    }
-}
-
-extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource {
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        5
-    }
-    
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        3
-    }
-    
-    
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
-        switch indexPath.section{
-        case 0:
-            cell.backgroundColor = .systemGreen
-        case 1:
-            cell.backgroundColor = .systemPink
-        case 2:
-            cell.backgroundColor = .systemBlue
-        default:
-            cell.backgroundColor = .systemGreen
-        }
-        return cell
     }
 }
