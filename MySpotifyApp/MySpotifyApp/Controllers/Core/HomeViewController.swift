@@ -149,12 +149,9 @@ class HomeViewController: UIViewController {
         tracks:[AudioTrack]
     ) {
         //Congigure Models
-        print(newAlbums.count)
-        print(playlists.count)
-        print(tracks.count)
         sections.append(.newRelease(viewModels: newAlbums.compactMap({
             return NewReleasesCellViewModel(name: $0.name,
-                                            artistName: "-",
+                                            artistName: $0.artists.first?.name ?? "-",
                                             artWorkURL: URL(string: $0.images?.first?.url ?? "") ,
                                             numberOfTracks: $0.totalTracks)
         })))

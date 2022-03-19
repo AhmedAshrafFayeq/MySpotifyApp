@@ -25,12 +25,13 @@ struct Album: Codable {
     let images: [Image]?
     let name, releaseDate: String
     let totalTracks: Int
+    let artists: [Artist]
     
     enum CodingKeys: String, CodingKey {
         case albumType = "album_type"
         case availableMarkets = "available_markets"
         case releaseDate = "release_date"
         case totalTracks = "total_tracks"
-        case id, images, name
+        case id, images, name, artists
     }
 }
