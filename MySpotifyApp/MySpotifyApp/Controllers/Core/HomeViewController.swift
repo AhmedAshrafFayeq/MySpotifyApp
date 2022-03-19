@@ -199,6 +199,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
                 for: indexPath) as? NewReleaseCollectionViewCell else { return UICollectionViewCell() }
 
             let viewModel = viewModel[indexPath.row]
+            cell.configure(with: viewModel)
             cell.backgroundColor = .red
             return cell
             
