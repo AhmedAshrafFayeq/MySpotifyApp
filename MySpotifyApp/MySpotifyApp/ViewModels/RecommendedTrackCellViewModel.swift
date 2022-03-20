@@ -9,5 +9,5 @@ import Foundation
 
 struct RecommendedTrackCellViewModel{
     let name, artistName: String
-    let artworklURL: URL?
+    let artworkURL: URL?
 }
