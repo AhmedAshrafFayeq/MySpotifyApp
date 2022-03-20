@@ -15,6 +15,8 @@ class FeaturedPlaylistCollectionViewCell: UICollectionViewCell {
     
     private let playlistCoverImageView: UIImageView = {
         let imageView   = UIImageView()
+        imageView.layer.masksToBounds = true
+        imageView.layer.cornerRadius  = 8
         imageView.image = UIImage(systemName: "photo")
         imageView.contentMode = .scaleAspectFill
         return imageView
@@ -22,21 +24,22 @@ class FeaturedPlaylistCollectionViewCell: UICollectionViewCell {
     
     private let playlistNameLabel: UILabel = {
         let label   = UILabel()
-        label.font  = .systemFont(ofSize: 20, weight: .semibold)
+        label.font  = .systemFont(ofSize: 18, weight: .regular)
         label.numberOfLines = 0
+        label.textAlignment = .center
         return label
     }()
     
     private let creatorNameLabel: UILabel = {
         let label   = UILabel()
-        label.font  = .systemFont(ofSize: 18, weight: .light)
+        label.font  = .systemFont(ofSize: 15, weight: .thin)
         label.numberOfLines = 0
+        label.textAlignment = .center
         return label
     }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        contentView.backgroundColor = .red
         contentView.addSubview(playlistCoverImageView)
         contentView.addSubview(playlistNameLabel)
         contentView.addSubview(creatorNameLabel)
@@ -49,32 +52,25 @@ class FeaturedPlaylistCollectionViewCell: UICollectionViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-//        let imageSize: CGFloat = contentView.height-10
-//        let playlistNameLabelSize = playlistNameLabel.sizeThatFits(
-//            CGSize(width: contentView.width-imageSize-10,
-//                   height: contentView.height-10
-//                  )
-//        )
-//        creatorNameLabel.sizeToFit()
-//
-//        //Image
-//        playlistCoverImageView.frame = CGRect(x: 5, y: 5, width: imageSize, height: imageSize)
-//
-//        //Album name label
-//        let albumLabelHeight = min(60, playlistNameLabelSize.height)
-//        playlistNameLabel.frame = CGRect(
-//            x: playlistCoverImageView.right+10,
-//            y: 5,
-//            width: playlistNameLabelSize.width,
-//            height: albumLabelHeight
-//        )
-//
-//        creatorNameLabel.frame = CGRect(
-//            x: playlistCoverImageView.right+10,
-//            y: playlistNameLabel.bottom,
-//            width: contentView.width - playlistCoverImageView.right-10,
-//            height: 30
-//        )
+        creatorNameLabel.frame = CGRect(
+            x: 3,
+            y: contentView.height-30,
+            width: contentView.width-6,
+            height: 30
+        )
+        playlistNameLabel.frame = CGRect(
+            x: 3,
+            y: contentView.height-60,
+            width: contentView.width-6,
+            height: 30
+        )
+        let imageSize = contentView.height-70
+        playlistCoverImageView.frame = CGRect(
+            x: (contentView.width-imageSize)/2,
+            y: 3,
+            width: imageSize,
+            height: imageSize
+        )
     }
     
     override func prepareForReuse() {
