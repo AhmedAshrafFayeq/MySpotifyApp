@@ -13,7 +13,7 @@ class RecommendedTrackCollectionViewCell: UICollectionViewCell {
     private let albumCoverImageView: UIImageView = {
         let imageView   = UIImageView()
         imageView.layer.masksToBounds = true
-        imageView.layer.cornerRadius  = 8
+        imageView.layer.cornerRadius  = 4
         imageView.image = UIImage(systemName: "photo")
         imageView.contentMode = .scaleAspectFill
         return imageView
@@ -23,7 +23,6 @@ class RecommendedTrackCollectionViewCell: UICollectionViewCell {
         let label   = UILabel()
         label.font  = .systemFont(ofSize: 18, weight: .regular)
         label.numberOfLines = 0
-        label.textAlignment = .center
         return label
     }()
     
@@ -31,7 +30,6 @@ class RecommendedTrackCollectionViewCell: UICollectionViewCell {
         let label   = UILabel()
         label.font  = .systemFont(ofSize: 15, weight: .thin)
         label.numberOfLines = 0
-        label.textAlignment = .center
         return label
     }()
     
@@ -49,6 +47,22 @@ class RecommendedTrackCollectionViewCell: UICollectionViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
+        let imageSize: CGFloat = contentView.height-4
+        albumCoverImageView.frame = CGRect(x: 5, y: 2, width: imageSize, height: imageSize)
+        
+        trackNameLabel.frame = CGRect(
+            x: albumCoverImageView.right+10,
+            y: 0,
+            width: contentView.width-albumCoverImageView.right-15,
+            height: contentView.height/2
+        )
+        
+        artistNameLabel.frame = CGRect(
+            x: albumCoverImageView.right+10,
+            y: contentView.height/2,
+            width: contentView.width-albumCoverImageView.right-15,
+            height: contentView.height/2
+        )
     }
     
     override func prepareForReuse() {
