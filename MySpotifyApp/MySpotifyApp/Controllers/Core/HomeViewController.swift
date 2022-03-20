@@ -9,9 +9,9 @@ import UIKit
 
 // enum of the three different types of collectionView cells
 enum BrwoseSectionType{
-    case newRelease(viewModels: [NewReleasesCellViewModel])             //1
-    case featuredPlaylists(viewModels: [NewReleasesCellViewModel])      //2
-    case recommendedTracks(viewModels: [NewReleasesCellViewModel])      //3
+    case newRelease(viewModels: [NewReleasesCellViewModel])                 //1
+    case featuredPlaylists(viewModels: [FeaturedPlaylistCellViewModel])     //2
+    case recommendedTracks(viewModels: [RecommendedTrackCellViewModel])     //3
 }
 
 class HomeViewController: UIViewController {
@@ -150,13 +150,24 @@ class HomeViewController: UIViewController {
     ) {
         //Congigure Models
         sections.append(.newRelease(viewModels: newAlbums.compactMap({
-            return NewReleasesCellViewModel(name: $0.name,
-                                            artistName: $0.artists.first?.name ?? "-",
-                                            artWorkURL: URL(string: $0.images?.first?.url ?? "") ,
-                                            numberOfTracks: $0.totalTracks)
+            return NewReleasesCellViewModel(
+                name: $0.name,
+                artistName: $0.artists.first?.name ?? "-",
+                artWorkURL: URL(string: $0.images?.first?.url ?? "") ,
+                numberOfTracks: $0.totalTracks)
         })))
-        sections.append(.featuredPlaylists(viewModels: []))
-        sections.append(.recommendedTracks(viewModels: []))
+        
+        sections.append(.featuredPlaylists(viewModels: playlists.compactMap({
+            return FeaturedPlaylistCellViewModel(
+                name: $0.name,
+                creatorName: $0.owner.display_name,
+                artworkURL: URL(string: $0.images.first?.url ?? ""))
+        })))
+        
+        sections.append(.recommendedTracks(viewModels: tracks.compactMap({
+            return RecommendedTrackCellViewModel(name: $0.name, artistName: $0.artists.first?.name ?? "-", artworklURL: URL(string: $0.album.images?.first?.url ?? ""))
+        })))
+        
         collectionView.reloadData()
     }
     
@@ -193,30 +204,28 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         let type = sections[indexPath.section]
 
         switch type{
-        case .newRelease(let viewModel):
+        case .newRelease(let viewModels):
             guard let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: NewReleaseCollectionViewCell.identifier,
                 for: indexPath) as? NewReleaseCollectionViewCell else { return UICollectionViewCell() }
 
-            let viewModel = viewModel[indexPath.row]
-            cell.configure(with: viewModel)
-            cell.backgroundColor = .red
+            cell.configure(with: viewModels[indexPath.row])
             return cell
             
-        case .recommendedTracks(let viewModel):
-            guard let cell = collectionView.dequeueReusableCell(
-                withReuseIdentifier: RecommendedTrackCollectionViewCell.identifier,
-                for: indexPath) as? RecommendedTrackCollectionViewCell else { return UICollectionViewCell() }
-            cell.backgroundColor = .blue
-            return cell
-            
-        case .featuredPlaylists(let viewModel):
+        case .featuredPlaylists(let viewModels):
             guard let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: FeaturedPlaylistCollectionViewCell.identifier,
                 for: indexPath) as? FeaturedPlaylistCollectionViewCell else { return UICollectionViewCell() }
-            cell.backgroundColor = .orange
+            
+            cell.configure(with: viewModels[indexPath.row])
             return cell
             
+        case .recommendedTracks(let viewModels):
+            guard let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: RecommendedTrackCollectionViewCell.identifier,
+                for: indexPath) as? RecommendedTrackCollectionViewCell else { return UICollectionViewCell() }
+            cell.backgroundColor = .orange
+            return cell
         }
         
         
