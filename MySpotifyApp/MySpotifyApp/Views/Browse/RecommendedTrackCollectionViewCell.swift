@@ -12,8 +12,6 @@ class RecommendedTrackCollectionViewCell: UICollectionViewCell {
     
     private let albumCoverImageView: UIImageView = {
         let imageView   = UIImageView()
-        imageView.layer.masksToBounds = true
-        imageView.layer.cornerRadius  = 4
         imageView.image = UIImage(systemName: "photo")
         imageView.contentMode = .scaleAspectFill
         return imageView
@@ -35,6 +33,8 @@ class RecommendedTrackCollectionViewCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        backgroundColor = .secondarySystemBackground
+        contentView.backgroundColor = .secondarySystemBackground
         contentView.addSubview(albumCoverImageView)
         contentView.addSubview(trackNameLabel)
         contentView.addSubview(artistNameLabel)
