@@ -16,6 +16,10 @@ enum BrwoseSectionType{
 
 class HomeViewController: UIViewController {
     
+    private var newAlbums = [Album]()
+    private var playlist: [Playlist] = []
+    private var tracks = [AudioTrack]()
+    
     private var collectionView: UICollectionView = UICollectionView(
         frame: .zero,
         collectionViewLayout: UICollectionViewCompositionalLayout{ sectionIndex, _ -> NSCollectionLayoutSection in
@@ -148,6 +152,11 @@ class HomeViewController: UIViewController {
         playlists: [Playlist],
         tracks:[AudioTrack]
     ) {
+        
+        self.newAlbums = newAlbums
+        self.playlist = playlists
+        self.tracks = tracks
+        
         //Congigure Models
         sections.append(.newRelease(viewModels: newAlbums.compactMap({
             return NewReleasesCellViewModel(
@@ -197,8 +206,6 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         sections.count
     }
     
-    
-    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
        
         let type = sections[indexPath.section]
@@ -227,9 +234,10 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             cell.configure(with: viewModels[indexPath.row])
             return cell
         }
-        
-        
-        
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.deselectItem(at: indexPath, animated: true)
     }
     
     static func createSectionLayout(section: Int) -> NSCollectionLayoutSection{
