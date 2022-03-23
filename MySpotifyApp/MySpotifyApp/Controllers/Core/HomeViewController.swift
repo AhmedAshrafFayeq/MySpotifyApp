@@ -240,7 +240,11 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         collectionView.deselectItem(at: indexPath, animated: true)
         switch sections[indexPath.section]{
         case .featuredPlaylists:
-            break
+            let playlist    = playlist[indexPath.row]
+            let playlistVC  = PlayListViewController(playlist: playlist)
+            playlistVC.title = playlist.name
+            playlistVC.navigationItem.largeTitleDisplayMode = .never
+            navigationController?.pushViewController(playlistVC, animated: true)
         case .newRelease:
             let album     = newAlbums[indexPath.row]
             let albumVC   = AlbumViewController(album: album)
