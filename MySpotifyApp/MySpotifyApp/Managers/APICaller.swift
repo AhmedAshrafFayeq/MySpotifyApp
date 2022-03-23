@@ -20,7 +20,34 @@ final class APICaller {
         case failedToGetData
     }
     
-    public func getCurrentUserProfile(completion: @escaping (Result<UserProfile, Error>) -> Void){
+    // MARK: - Albums
+    
+    public func getAlbumDetails(album: Album, completion: @escaping(Result<String, Error>) -> Void) {
+        createRequest(
+            with: URL(string: Constants.baseAPIURL + "/albums/" + album.id),
+            type: .GET) { request in
+                URLSession.shared.dataTask(with: request) { data, _, error in
+                    guard let data = data, error == nil else {
+                        completion(.failure(APIError.failedToGetData))
+                        return
+                    }
+                    do{
+                        let json = try JSONSerialization.jsonObject(with: data, options: .fragmentsAllowed)
+                        print(json)
+                    }catch{
+                        print(error)
+                        completion(.failure(error))
+                    }
+                    
+                }.resume()
+            }
+    }
+    
+    // MARK: - Playlists
+    
+    // MARK: - Profile
+    
+    public func getCurrentUserProfile(completion: @escaping (Result<UserProfile, Error>) -> Void) {
         createRequest(
             with: URL(string: Constants.baseAPIURL + "/me"),
             type: .GET
@@ -41,7 +68,7 @@ final class APICaller {
         }
     }
     
-    public func getNewReleases(completion: @escaping ((Result<NewReleasesResponse, Error>)) -> Void){
+    public func getNewReleases(completion: @escaping ((Result<NewReleasesResponse, Error>)) -> Void) {
         createRequest(with: URL(string: Constants.baseAPIURL + "/browse/new-releases?limit=50"), type: .GET){ request in
             URLSession.shared.dataTask(with: request){ data, _, error in
                 guard let data = data, error == nil else {
@@ -59,7 +86,7 @@ final class APICaller {
         
     }
     
-    public func getFeaturedPlaylists(completion: @escaping((Result<FeaturedPlaylistsResponse, Error>)-> Void)){
+    public func getFeaturedPlaylists(completion: @escaping((Result<FeaturedPlaylistsResponse, Error>)-> Void)) {
         createRequest(with: URL(string: Constants.baseAPIURL + "/browse/featured-playlists?limit=20"), type: .GET) { request in
             URLSession.shared.dataTask(with: request) { data, _, error in
                 guard let data = data, error == nil else {
@@ -76,7 +103,7 @@ final class APICaller {
         }
     }
     
-    public func getRecommendations(genres: Set<String>, completion: @escaping((Result<RecommendationResponse, Error>)-> Void)){
+    public func getRecommendations(genres: Set<String>, completion: @escaping((Result<RecommendationResponse, Error>)-> Void)) {
         let seeds = genres.joined(separator: ",")
         createRequest(with: URL(string: Constants.baseAPIURL + "/recommendations?limit=40&seed_genres=\(seeds)"), type: .GET) { request in
             URLSession.shared.dataTask(with: request) { data, _, error in
@@ -95,7 +122,7 @@ final class APICaller {
         }
     }
     
-    public func getRecommendedGenres(completion: @escaping((Result<RecommendedGenresResponse, Error>)-> Void)){
+    public func getRecommendedGenres(completion: @escaping((Result<RecommendedGenresResponse, Error>)-> Void)) {
         createRequest(with: URL(string: Constants.baseAPIURL + "/recommendations/available-genre-seeds"), type: .GET) { request in
             URLSession.shared.dataTask(with: request) { data, _, error in
                 guard let data = data, error == nil else {
@@ -112,9 +139,6 @@ final class APICaller {
         }
     }
 
-    
-    
-    
     // MARK: - Private
     
     enum httpMethod: String {
@@ -122,7 +146,7 @@ final class APICaller {
         case POST
     }
     
-    private func createRequest(with url: URL?, type: httpMethod, completion: @escaping(URLRequest) -> Void){
+    private func createRequest(with url: URL?, type: httpMethod, completion: @escaping(URLRequest) -> Void) {
         AuthManager.shared.withValidToken { token in
             guard let apiUrl = url else { return }
             var request = URLRequest(url: apiUrl)
