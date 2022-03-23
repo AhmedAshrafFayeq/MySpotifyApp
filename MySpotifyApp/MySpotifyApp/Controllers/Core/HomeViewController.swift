@@ -238,6 +238,18 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
+        switch sections[indexPath.section]{
+        case .featuredPlaylists:
+            break
+        case .newRelease:
+            let album     = newAlbums[indexPath.row]
+            let albumVC   = AlbumViewController(album: album)
+            albumVC.title = album.name
+            albumVC.navigationItem.largeTitleDisplayMode = .never
+            navigationController?.pushViewController(albumVC, animated: true)
+        case .recommendedTracks:
+            break
+        }
     }
     
     static func createSectionLayout(section: Int) -> NSCollectionLayoutSection{
