@@ -22,7 +22,7 @@ final class APICaller {
     
     // MARK: - Albums
     
-    public func getAlbumDetails(album: Album, completion: @escaping(Result<String, Error>) -> Void) {
+    public func getAlbumDetails(album: Album, completion: @escaping(Result<AlbumDetailsResponse, Error>) -> Void) {
         createRequest(
             with: URL(string: Constants.baseAPIURL + "/albums/" + album.id),
             type: .GET) { request in
@@ -32,10 +32,9 @@ final class APICaller {
                         return
                     }
                     do{
-                        let json = try JSONSerialization.jsonObject(with: data, options: .fragmentsAllowed)
-                        print(json)
+                        let result = try JSONDecoder().decode(AlbumDetailsResponse.self, from: data)
+                        completion(.success(result))
                     }catch{
-                        print(error)
                         completion(.failure(error))
                     }
                     
@@ -113,7 +112,6 @@ final class APICaller {
                 }
                 do {
                     let result = try JSONDecoder().decode(RecommendationResponse.self, from: data)
-                    print(result)
                     completion(.success(result))
                 }catch{
                     completion(.failure(error))
