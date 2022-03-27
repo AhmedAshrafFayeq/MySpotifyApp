@@ -44,6 +44,8 @@ class PlayListViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    private var viewModels = [RecommendedTrackCellViewModel]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         title = playlist.name
@@ -58,12 +60,22 @@ class PlayListViewController: UIViewController {
         collectionView.delegate = self
         collectionView.dataSource = self
         
-        APICaller.shared.getPlaylistDetails(playlist: playlist) { result in
-            switch result {
-            case .success(_):
-                break
-            case .failure(_):
-                break
+        APICaller.shared.getPlaylistDetails(playlist: playlist) { [weak self] result in
+            guard let self = self else {return}
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let model):
+                    self.viewModels = model.tracks.items.compactMap({
+                        RecommendedTrackCellViewModel(
+                            name: $0.track.name,
+                            artistName: $0.track.artists.first?.name ?? "-",
+                            artworkURL: URL(string: $0.track.album?.images?.first?.url ?? "")
+                        )
+                    })
+                    self.collectionView.reloadData()
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
             }
         }
     }
@@ -81,7 +93,7 @@ extension PlayListViewController: UICollectionViewDelegate, UICollectionViewData
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        30
+        viewModels.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -89,8 +101,7 @@ extension PlayListViewController: UICollectionViewDelegate, UICollectionViewData
             withReuseIdentifier: RecommendedTrackCollectionViewCell.identifier,
             for: indexPath
         ) as? RecommendedTrackCollectionViewCell else { return UICollectionViewCell() }
-        cell.backgroundColor = .red
-//        cell.configure(with:  )
+        cell.configure(with: viewModels[indexPath.row])
         return cell
     }
     
