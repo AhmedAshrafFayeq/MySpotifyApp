@@ -118,6 +118,27 @@ extension PlayListViewController: UICollectionViewDelegate, UICollectionViewData
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        
+        guard  let header = collectionView.dequeueReusableSupplementaryView(
+            ofKind: kind,
+            withReuseIdentifier: PlaylistHeaderCollectionReusableView.identifier,
+            for: indexPath
+        ) as? PlaylistHeaderCollectionReusableView,
+        kind == UICollectionView.elementKindSectionHeader else {
+            return UICollectionReusableView()
+        }
+        
+        let headerViewModel = PlaylistHeaderViewViewModel(
+            name: playlist.name,
+            ownerName: playlist.owner.display_name,
+            description: playlist.description,
+            artworkURL: URL(string: playlist.images.first?.url ?? "")
+        )
+        header.configure(with: headerViewModel)
+        return header
+    }
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
         //play song
