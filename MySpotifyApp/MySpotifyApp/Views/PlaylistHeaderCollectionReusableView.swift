@@ -39,16 +39,32 @@ final class PlaylistHeaderCollectionReusableView: UICollectionReusableView {
         return imageView
     }()
     
+    private let playAllButton: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = .systemGreen
+        let image = UIImage(systemName: "play.fill", withConfiguration: UIImage.SymbolConfiguration(pointSize: 30, weight: .regular))
+        button.setImage(image, for: .normal)
+        button.tintColor = .white
+        button.layer.cornerRadius = 30
+        button.layer.masksToBounds = true
+        return button
+    }()
+    
     // MARK: - Init
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .systemBackground
-        addSubviews(imageView, nameLabel, descriptionLabel, ownerLabel)
+        addSubviews(imageView, nameLabel, descriptionLabel, ownerLabel, playAllButton)
+        playAllButton.addTarget(self, action: #selector(didTapPlayAll), for: .touchUpInside)
     }
     
     required init?(coder: NSCoder) {
         fatalError()
+    }
+    
+    @objc private func didTapPlayAll() {
+        //
     }
     
     override func layoutSubviews() {
@@ -60,7 +76,7 @@ final class PlaylistHeaderCollectionReusableView: UICollectionReusableView {
         descriptionLabel.frame = CGRect(x: 10, y: nameLabel.bottom, width: width-20, height: 44)
         ownerLabel.frame = CGRect(x: 10, y: descriptionLabel.bottom, width: width-20, height: 44)
 
-
+        playAllButton.frame = CGRect(x: width-80, y: height-80, width: 60, height: 60)
     }
     
     func configure(with viewModel: PlaylistHeaderViewViewModel){
