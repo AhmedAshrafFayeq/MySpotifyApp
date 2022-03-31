@@ -61,7 +61,7 @@ class AlbumTrackCollectionViewCell: UICollectionViewCell {
         artistNameLabel.text = nil
     }
     
-    func configure(with viewModel: RecommendedTrackCellViewModel) {
+    func configure(with viewModel: AlbumCollectionViewCellViewModel) {
         trackNameLabel.text = viewModel.name
         artistNameLabel.text = viewModel.artistName
     }

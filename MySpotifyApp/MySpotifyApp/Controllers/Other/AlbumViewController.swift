@@ -43,7 +43,7 @@ class AlbumViewController: UIViewController {
     )
 
     
-    private var viewModels = [RecommendedTrackCellViewModel]()
+    private var viewModels = [AlbumCollectionViewCellViewModel]()
  
     private var album: Album
     
@@ -80,10 +80,9 @@ class AlbumViewController: UIViewController {
                 switch result {
                 case .success(let model):
                     self.viewModels = model.tracks.items.compactMap({
-                        RecommendedTrackCellViewModel(
+                        AlbumCollectionViewCellViewModel(
                             name: $0.name,
-                            artistName: $0.artists.first?.name ?? "-",
-                            artworkURL: URL(string: $0.album?.images?.first?.url ?? "")
+                            artistName: $0.artists.first?.name ?? "-"
                         )
                     })
                     self.collectionView.reloadData()
