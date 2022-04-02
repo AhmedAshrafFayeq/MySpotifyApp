@@ -1,5 +1,5 @@
 //
-//  GenreCollectionViewCell.swift
+//  CategoryCollectionViewCell.swift
 //  MySpotifyApp
 //
 //  Created by Ahmed Fayeq on 01/04/2022.
@@ -7,9 +7,9 @@
 
 import UIKit
 
-class GenreCollectionViewCell: UICollectionViewCell {
+class CategoryCollectionViewCell: UICollectionViewCell {
     
-    static let identifier = "GenreCollectionViewCell"
+    static let identifier = "CategoryCollectionViewCell"
     
     private let imageView: UIImageView = {
         let imageView = UIImageView()

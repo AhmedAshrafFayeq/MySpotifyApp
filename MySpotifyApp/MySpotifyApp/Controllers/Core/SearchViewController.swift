@@ -9,6 +9,8 @@ import UIKit
 
 class SearchViewController: UIViewController, UISearchResultsUpdating{
     
+    private var categories = [Category]()
+    
     let searchController: UISearchController = {
 
         let vc = UISearchController(searchResultsController: SearchResultsViewController())
@@ -46,15 +48,15 @@ class SearchViewController: UIViewController, UISearchResultsUpdating{
         }))
     
     // MARK: - Lifecycle
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         searchController.searchResultsUpdater = self
         navigationItem.searchController = searchController
         view.addSubview(collectionView)
-        collectionView.register(GenreCollectionViewCell.self,
-                                forCellWithReuseIdentifier: GenreCollectionViewCell.identifier)
+        collectionView.register(CategoryCollectionViewCell.self,
+                                forCellWithReuseIdentifier: CategoryCollectionViewCell.identifier)
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.backgroundColor = .systemBackground
@@ -62,8 +64,11 @@ class SearchViewController: UIViewController, UISearchResultsUpdating{
         APICaller.shared.getCategrories { result in
             DispatchQueue.main.async {
                 switch result{
-                case .success(_): break
-                case .failure(_): break
+                case .success(let categories):
+                    self.categories = categories
+                    self.collectionView.reloadData()
+                case .failure(let error):
+                    print(error.localizedDescription)
                 }
             }
         }
@@ -93,17 +98,18 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        20
+        categories.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: GenreCollectionViewCell.identifier,
+            withReuseIdentifier: CategoryCollectionViewCell.identifier,
             for: indexPath
-        ) as? GenreCollectionViewCell else {
+        ) as? CategoryCollectionViewCell else {
                 return UICollectionViewCell()
             }
-        cell.configure(with: "Rock")
+        let category = categories[indexPath.row]
+        cell.configure(with: category.name)
         return cell
     }
     
