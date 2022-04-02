@@ -109,7 +109,10 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
                 return UICollectionViewCell()
             }
         let category = categories[indexPath.row]
-        cell.configure(with: category.name)
+        cell.configure(with: CategoryCollectionViewCellViewModel(
+            name: category.name,
+            artworkURL: URL(string: category.icons.first?.url ?? "")
+        ))
         return cell
     }
     
