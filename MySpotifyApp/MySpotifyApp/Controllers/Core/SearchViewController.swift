@@ -58,6 +58,15 @@ class SearchViewController: UIViewController, UISearchResultsUpdating{
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.backgroundColor = .systemBackground
+        
+        APICaller.shared.getCategrories { result in
+            DispatchQueue.main.async {
+                switch result{
+                case .success(_): break
+                case .failure(_): break
+                }
+            }
+        }
     }
     
     override func viewDidLayoutSubviews() {

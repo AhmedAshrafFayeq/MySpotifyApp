@@ -35,7 +35,7 @@ class GenreCollectionViewCell: UICollectionViewCell {
         .systemRed,
         .systemYellow,
         .darkGray,
-        .systemTeal        
+        .systemTeal
     ]
     
     override init(frame: CGRect) {
