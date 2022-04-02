@@ -12,7 +12,6 @@ class SearchViewController: UIViewController, UISearchResultsUpdating{
     private var categories = [Category]()
     
     let searchController: UISearchController = {
-
         let vc = UISearchController(searchResultsController: SearchResultsViewController())
         vc.searchBar.placeholder = "Songs, Artists, Albums"
         vc.searchBar.searchBarStyle = .minimal
@@ -61,7 +60,8 @@ class SearchViewController: UIViewController, UISearchResultsUpdating{
         collectionView.dataSource = self
         collectionView.backgroundColor = .systemBackground
         
-        APICaller.shared.getCategrories { result in
+        APICaller.shared.getCategrories { [weak self] result in
+            guard let self = self else { return }
             DispatchQueue.main.async {
                 switch result{
                 case .success(let categories):
@@ -109,11 +109,20 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
                 return UICollectionViewCell()
             }
         let category = categories[indexPath.row]
-        cell.configure(with: CategoryCollectionViewCellViewModel(
-            name: category.name,
-            artworkURL: URL(string: category.icons.first?.url ?? "")
-        ))
+        cell.configure(
+            with: CategoryCollectionViewCellViewModel(
+                name: category.name,
+                artworkURL: URL(string: category.icons.first?.url ?? "")
+            )
+        )
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.deselectItem(at: indexPath, animated: true)
+        let category = categories[indexPath.row]
+        let categoryVC = CategoryViewController(category: category)
+        categoryVC.navigationItem.largeTitleDisplayMode = .never
+        navigationController?.pushViewController(categoryVC, animated: true)
+    }
 }
