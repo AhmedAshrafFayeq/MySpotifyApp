@@ -26,6 +26,8 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
         let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.backgroundColor = .systemBackground
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        tableView.register(SearchResultDefaultTableViewCell.self,
+                           forCellReuseIdentifier: SearchResultDefaultTableViewCell.identifier)
         tableView.isHidden = true
         return tableView
     }()
@@ -91,21 +93,32 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
         sections[section].results.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        let Acell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         
         let result = sections[indexPath.section].results[indexPath.row]
         switch result {
-        case .artist(let model):
-            cell.textLabel?.text = model.name
+        case .artist(let artist):
+            guard let cell = tableView.dequeueReusableCell(
+                withIdentifier: SearchResultDefaultTableViewCell.identifier,
+                for: indexPath
+            ) as? SearchResultDefaultTableViewCell else{
+                return UITableViewCell()
+            }
+            let viewModel = SearchResultDefaultTableViewCellViewModel(
+                title: artist.name,
+                imageURL: URL(string: artist.images?.first?.url ?? "")
+            )
+            cell.configure(with: viewModel)
+            return cell
         case .album(let model):
-            cell.textLabel?.text = model.name
+            Acell.textLabel?.text = model.name
         case .track(let model):
-            cell.textLabel?.text = model.name
+            Acell.textLabel?.text = model.name
         case .playlist(let model):
-            cell.textLabel?.text = model.name
+            Acell.textLabel?.text = model.name
             
         }
-        return cell
+        return Acell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
