@@ -7,12 +7,17 @@
 
 import UIKit
 
+struct SearchSection {
+    let title: String
+    let results: [SearchResults]
+}
+
 class SearchResultsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    private var results: [SearchResults] = []
+    private var sections: [SearchSection] = []
     
     private let tableView: UITableView = {
-        let tableView = UITableView()
+        let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.backgroundColor = .systemBackground
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         tableView.isHidden = true
@@ -33,17 +38,71 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     func update(with results: [SearchResults]) {
-        self.results = results
+        let artists = results.filter({
+            switch $0 {
+            case .artist: return true
+            default: return false
+            }
+        })
+        
+        let albums = results.filter({
+            switch $0 {
+            case .album: return true
+            default: return false
+            }
+        })
+
+        let tracks = results.filter({
+            switch $0 {
+            case .track: return true
+            default: return false
+            }
+        })
+
+        let playlists = results.filter({
+            switch $0 {
+            case .playlist: return true
+            default: return false
+            }
+        })
+
+        
+        self.sections = [
+            SearchSection(title: "Songs", results: tracks),
+            SearchSection(title: "Artists", results: artists),
+            SearchSection(title: "Playlists", results: playlists),
+            SearchSection(title: "Albums", results: albums)
+        ]
         tableView.reloadData()
         tableView.isHidden = results.isEmpty
     }
     
+    func numberOfSections(in tableView: UITableView) -> Int {
+        sections.count
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        results.count
+        sections[section].results.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let result = sections[indexPath.section].results[indexPath.row]
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.textLabel?.text = "Foo"
+        switch result {
+        case .artist(let model):
+            cell.textLabel?.text = model.name
+        case .album(let model):
+            cell.textLabel?.text = model.name
+        case .track(let model):
+            cell.textLabel?.text = model.name
+        case .playlist(let model):
+            cell.textLabel?.text = model.name
+            
+        }
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        sections[section].title
     }
 }
