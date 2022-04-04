@@ -11,4 +11,5 @@ import Foundation
 struct Artist: Codable{
     let id, name, type: String
     let external_urls: [String: String]
+    let images: [Image]?
 }
