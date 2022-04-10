@@ -22,6 +22,7 @@ class PlayerViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         view.addSubviews(imageView, controlsView)
+        controlsView.delegate = self
         configureBarButtons()
     }
     
@@ -50,3 +51,19 @@ class PlayerViewController: UIViewController {
     }
 }
 
+extension PlayerViewController: PlayerControlsViewDelegate {
+    
+    func PlayerControlsViewDidTapPlayPauseButton(_ playerControlsView: PlayerControlsView) {
+        
+    }
+    
+    func PlayerControlsViewDidTapPlayNextButton(_ playerControlsView: PlayerControlsView) {
+        
+    }
+    
+    func PlayerControlsViewDidTapPlayBackButton(_ playerControlsView: PlayerControlsView) {
+        
+    }
+    
+    
+}
