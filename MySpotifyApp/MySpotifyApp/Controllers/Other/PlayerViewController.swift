@@ -64,6 +64,4 @@ extension PlayerViewController: PlayerControlsViewDelegate {
     func PlayerControlsViewDidTapPlayBackButton(_ playerControlsView: PlayerControlsView) {
         
     }
-    
-    
 }
