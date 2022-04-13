@@ -8,22 +8,48 @@
 import Foundation
 import UIKit
 
+protocol PlayerDataSource: AnyObject {
+    var songName: String?   { get }
+    var subtitle: String?   { get }
+    var imageURL: URL?      { get }
+}
+
 final class PlaybackPresenter {
-    static func startPlayback(
+    
+    static let shared = PlaybackPresenter()
+    
+    func startPlayback(
         from viewController: UIViewController,
         track: AudioTrack
     ) {
         let vc = PlayerViewController()
         vc.title = track.name
+        vc.dataSource = self
         viewController.present(UINavigationController(rootViewController: vc), animated: true)
     }
     
-    static func startPlayback(
+    func startPlayback(
         from viewController: UIViewController,
         tracks: [AudioTrack]
     ) {
         let vc = PlayerViewController()
         viewController.present(UINavigationController(rootViewController: vc), animated: true)
     }
+    
+}
+
+extension PlaybackPresenter: PlayerDataSource {
+    var songName: String? {
+        nil
+    }
+    
+    var subtitle: String? {
+        nil
+    }
+    
+    var imageURL: URL? {
+        nil
+    }
+    
     
 }
