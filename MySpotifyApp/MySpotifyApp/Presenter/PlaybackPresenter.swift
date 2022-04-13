@@ -18,6 +18,19 @@ final class PlaybackPresenter {
     
     static let shared = PlaybackPresenter()
     
+    private var track: AudioTrack?
+    private var tracks = [AudioTrack]()
+    
+    var currentTrack: AudioTrack? {
+        if let track = track, tracks.isEmpty {
+            return track
+        }
+        else if !tracks.isEmpty {
+            return tracks.first
+        }
+        return nil
+    }
+    
     func startPlayback(
         from viewController: UIViewController,
         track: AudioTrack
