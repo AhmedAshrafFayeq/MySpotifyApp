@@ -43,6 +43,12 @@ class PlayerViewController: UIViewController {
     
     private func configure() {
         imageView.sd_setImage(with: dataSource?.imageURL)
+        controlsView.configure(
+            with: PlayerControlsViewViewModel(
+            title: dataSource?.songName,
+            subtitle: dataSource?.subtitle
+            )
+        )
     }
     
     private func configureBarButtons() {
