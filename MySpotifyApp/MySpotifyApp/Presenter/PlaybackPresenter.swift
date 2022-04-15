@@ -35,6 +35,8 @@ final class PlaybackPresenter {
         from viewController: UIViewController,
         track: AudioTrack
     ) {
+        self.track  = track
+        self.tracks = []
         let vc = PlayerViewController()
         vc.title = track.name
         vc.dataSource = self
@@ -45,6 +47,8 @@ final class PlaybackPresenter {
         from viewController: UIViewController,
         tracks: [AudioTrack]
     ) {
+        self.tracks = tracks
+        self.track  = nil
         let vc = PlayerViewController()
         viewController.present(UINavigationController(rootViewController: vc), animated: true)
     }
@@ -53,15 +57,15 @@ final class PlaybackPresenter {
 
 extension PlaybackPresenter: PlayerDataSource {
     var songName: String? {
-        nil
+        currentTrack?.name
     }
     
     var subtitle: String? {
-        nil
+        currentTrack?.artists.first?.name
     }
     
     var imageURL: URL? {
-        nil
+        URL(string: currentTrack?.album?.images?.first?.url ?? "")
     }
     
     
