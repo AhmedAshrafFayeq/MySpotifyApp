@@ -8,9 +8,17 @@
 import UIKit
 import SDWebImage
 
+protocol PlayerViewControllerDelegate: AnyObject {
+    func didTapPlayPause()
+    func didTapForward()
+    func didTapBackward()
+    func didSlideSlider(_ value: Float)
+}
+
 class PlayerViewController: UIViewController {
     
     weak var dataSource: PlayerDataSource?
+    weak var delegate: PlayerViewControllerDelegate?
     
     private let imageView: UIImageView = {
         let imageView = UIImageView()
@@ -19,7 +27,7 @@ class PlayerViewController: UIViewController {
         return imageView
     }()
     
-    private let controlsView = PlayerControlsView()
+    private let controlsView = MySpotifyApp.PlayerControlsView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -68,14 +76,19 @@ class PlayerViewController: UIViewController {
 extension PlayerViewController: PlayerControlsViewDelegate {
     
     func PlayerControlsViewDidTapPlayPauseButton(_ playerControlsView: PlayerControlsView) {
-        
+        delegate?.didTapPlayPause()
     }
     
     func PlayerControlsViewDidTapPlayNextButton(_ playerControlsView: PlayerControlsView) {
-        
+        delegate?.didTapForward()
     }
     
     func PlayerControlsViewDidTapPlayBackButton(_ playerControlsView: PlayerControlsView) {
-        
+        delegate?.didTapBackward()
     }
+    
+    func PlayerControlsView(_ playerControlsView: PlayerControlsView, didSlideSlider value: Float) {
+        delegate?.didSlideSlider(value)
+    }
+
 }
