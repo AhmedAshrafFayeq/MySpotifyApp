@@ -22,7 +22,7 @@ struct Album: Codable {
     let albumType: String
     let availableMarkets: [String]
     let id: String
-    let images: [Image]?
+    var images: [Image]?
     let name, releaseDate: String
     let totalTracks: Int
     let artists: [Artist]
