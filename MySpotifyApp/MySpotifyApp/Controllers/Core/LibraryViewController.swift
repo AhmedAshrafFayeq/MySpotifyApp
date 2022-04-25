@@ -24,6 +24,7 @@ class LibraryViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         scrollView.delegate = self
+        toggleView.delegate = self
         view.addSubviews(scrollView, toggleView)
         scrollView.contentSize = CGSize(width: view.width*2, height: scrollView.height)
         addChildren()
@@ -60,6 +61,16 @@ class LibraryViewController: UIViewController {
 
 extension LibraryViewController: UIScrollViewDelegate {
     func scrollViewDidScrollToTop(_ scrollView: UIScrollView) {
+        
+    }
+}
+
+extension LibraryViewController: LibraryToggleViewDelegate {
+    func libraryToggleViewDidTapPlaylists(_ toggleView: LibraryToggleView) {
+        
+    }
+    
+    func libraryToggleViewDidTapAlbums(_ toggleView: LibraryToggleView) {
         
     }
 }

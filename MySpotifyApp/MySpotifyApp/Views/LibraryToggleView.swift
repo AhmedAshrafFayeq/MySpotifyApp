@@ -7,7 +7,14 @@
 
 import UIKit
 
+protocol LibraryToggleViewDelegate: AnyObject {
+    func libraryToggleViewDidTapPlaylists(_ toggleView: LibraryToggleView)
+    func libraryToggleViewDidTapAlbums(_ toggleView: LibraryToggleView)
+}
+
 class LibraryToggleView: UIView {
+    
+    weak var delegate: LibraryToggleViewDelegate?
     
     private let playListButton: UIButton = {
         let button = UIButton()
@@ -36,11 +43,11 @@ class LibraryToggleView: UIView {
     }
     
     @objc private func didTapPlaylists() {
-        
+        delegate?.libraryToggleViewDidTapPlaylists(self)
     }
     
     @objc private func didTapAlbums() {
-        
+        delegate?.libraryToggleViewDidTapAlbums(self)
     }
     
     override func layoutSubviews() {
