@@ -66,6 +66,7 @@
 		2DEE484A27B98ACA00B82C0F /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DEE484927B98ACA00B82C0F /* UserProfile.swift */; };
 		2DF399D92811E0E900B64D96 /* LibraryPlaylistsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DF399D82811E0E900B64D96 /* LibraryPlaylistsViewController.swift */; };
 		2DF399DB2811E11500B64D96 /* LibraryAlbumsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DF399DA2811E11500B64D96 /* LibraryAlbumsViewController.swift */; };
+		2DF399DD2816E23800B64D96 /* LibraryToggleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DF399DC2816E23800B64D96 /* LibraryToggleView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -129,6 +130,7 @@
 		2DEE484927B98ACA00B82C0F /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
 		2DF399D82811E0E900B64D96 /* LibraryPlaylistsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryPlaylistsViewController.swift; sourceTree = "<group>"; };
 		2DF399DA2811E11500B64D96 /* LibraryAlbumsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryAlbumsViewController.swift; sourceTree = "<group>"; };
+		2DF399DC2816E23800B64D96 /* LibraryToggleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryToggleView.swift; sourceTree = "<group>"; };
 		4BC8E0C3316681B8883806A4 /* Pods-MySpotifyApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MySpotifyApp.release.xcconfig"; path = "Target Support Files/Pods-MySpotifyApp/Pods-MySpotifyApp.release.xcconfig"; sourceTree = "<group>"; };
 		7ED7B0F37923E5E784F85ADB /* Pods_MySpotifyApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MySpotifyApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		94B8A21622C92C40DA65918F /* Pods-MySpotifyApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MySpotifyApp.debug.xcconfig"; path = "Target Support Files/Pods-MySpotifyApp/Pods-MySpotifyApp.debug.xcconfig"; sourceTree = "<group>"; };
@@ -199,6 +201,7 @@
 				2DED37E127F2759E00F9A0C9 /* AlbumTrackCollectionViewCell.swift */,
 				2DED37E527F712C800F9A0C9 /* GenreCollectionViewCell.swift */,
 				2DDBC8662803531400AEE7B4 /* PlayerControlsView.swift */,
+				2DF399DC2816E23800B64D96 /* LibraryToggleView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -461,6 +464,7 @@
 				2DEE482927B987F800B82C0F /* SearchViewController.swift in Sources */,
 				2DED37D727EFA38900F9A0C9 /* PlaylistDetailsResponse.swift in Sources */,
 				2DEE483D27B9899900B82C0F /* AuthManager.swift in Sources */,
+				2DF399DD2816E23800B64D96 /* LibraryToggleView.swift in Sources */,
 				2DEE483B27B9890200B82C0F /* SearchResultsViewController.swift in Sources */,
 				2DD214F827E515C10036C833 /* NewReleasesCellViewModel.swift in Sources */,
 				2DD214FC27E77D790036C833 /* RecommendedTrackCellViewModel.swift in Sources */,
