@@ -23,10 +23,10 @@ class LibraryViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        scrollView.delegate = self
-        toggleView.delegate = self
         view.addSubviews(scrollView, toggleView)
         scrollView.contentSize = CGSize(width: view.width*2, height: scrollView.height)
+        scrollView.delegate = self
+        toggleView.delegate = self
         addChildren()
     }
     
@@ -60,8 +60,12 @@ class LibraryViewController: UIViewController {
 }
 
 extension LibraryViewController: UIScrollViewDelegate {
-    func scrollViewDidScrollToTop(_ scrollView: UIScrollView) {
-        
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView.contentOffset.x >= (view.width-100) {
+            toggleView.update(for: .albums)
+        }else {
+            toggleView.update(for: .playlists)
+        }
     }
 }
 
