@@ -62,6 +62,11 @@ final class APICaller {
             }
     }
     
+    public func getCurrentUserPlaylists(completion: @escaping (Result<[Playlist], Error>) -> Void) {}
+    public func createPlaylist(with name: String, completion: @escaping (Bool) -> Void) {}
+    public func addTrackToPlaylist(track: AudioTrack) {}
+    public func removeTrackFromPlaylist(track: AudioTrack) {}
+    
     // MARK: - Profile
     
     public func getCurrentUserProfile(completion: @escaping (Result<UserProfile, Error>) -> Void) {
