@@ -11,7 +11,15 @@ class LibraryPlaylistsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemPink
+        view.backgroundColor = .systemBackground
+        
+        APICaller.shared.getCurrentUserPlaylists { result in
+            switch result {
+            case .success(let playlists): break
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
     }
     
 }
