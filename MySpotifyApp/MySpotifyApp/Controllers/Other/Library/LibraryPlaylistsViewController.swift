@@ -15,11 +15,13 @@ class LibraryPlaylistsViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         
-        APICaller.shared.getCurrentUserPlaylists { result in
+        APICaller.shared.getCurrentUserPlaylists { [weak self] result in
+            guard let self = self else { return }
             DispatchQueue.main.async {
                 switch result {
                 case .success(let playlists):
                     self.playlists = playlists
+                    self.updateUI()
                 case .failure(let error):
                     print(error.localizedDescription)
                 }
@@ -27,4 +29,11 @@ class LibraryPlaylistsViewController: UIViewController {
         }
     }
     
+    private func updateUI() {
+        if playlists.isEmpty {
+            //show empty label
+        }else {
+            // show table
+        }
+    }
 }
