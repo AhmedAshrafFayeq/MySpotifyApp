@@ -9,15 +9,20 @@ import UIKit
 
 class LibraryPlaylistsViewController: UIViewController {
     
+    var playlists = [Playlist]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         
         APICaller.shared.getCurrentUserPlaylists { result in
-            switch result {
-            case .success(let playlists): break
-            case .failure(let error):
-                print(error.localizedDescription)
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let playlists):
+                    self.playlists = playlists
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
             }
         }
     }
