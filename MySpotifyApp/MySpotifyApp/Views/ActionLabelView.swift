@@ -7,11 +7,36 @@
 
 import UIKit
 
+struct ActionLabelViewViewModel {
+    let text, actionTitle: String
+}
+
+protocol ActionLabelViewDelegate: AnyObject {
+    func actionLabelViewDidTapButton(_ actionView: ActionLabelView)
+}
+
 class ActionLabelView: UIView {
+    
+    weak var delegate: ActionLabelViewDelegate?
+    
+    private let label: UILabel = {
+        let label = UILabel()
+        label.textAlignment = .center
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    private let button: UIButton = {
+        let button = UIButton()
+        button.setTitleColor(.link, for: .normal)
+        return button
+    }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         clipsToBounds = true
+        addSubviews(label, button)
+        button.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
     }
 
     required init?(coder: NSCoder) {
@@ -20,5 +45,13 @@ class ActionLabelView: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
+    }
+    
+    @objc func didTapButton() {
+        delegate?.actionLabelViewDidTapButton(self)
+    }
+    
+    func configure(with viewModel: ActionLabelViewViewModel) {
+        
     }
 }
