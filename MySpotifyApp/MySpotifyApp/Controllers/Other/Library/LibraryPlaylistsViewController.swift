@@ -18,7 +18,7 @@ class LibraryPlaylistsViewController: UIViewController {
         view.backgroundColor = .systemBackground
         
         noPlaylistsView.configure(with: ActionLabelViewViewModel(text: "You don't have any playlists yet.", actionTitle: "Create"))
-        
+        view.addSubviews(noPlaylistsView)
         APICaller.shared.getCurrentUserPlaylists { [weak self] result in
             guard let self = self else { return }
             DispatchQueue.main.async {
