@@ -35,6 +35,7 @@ class ActionLabelView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         clipsToBounds = true
+        isHidden = true
         addSubviews(label, button)
         button.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
     }
