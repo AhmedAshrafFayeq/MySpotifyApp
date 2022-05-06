@@ -14,7 +14,7 @@ struct ActionLabelViewViewModel {
 protocol ActionLabelViewDelegate: AnyObject {
     func actionLabelViewDidTapButton(_ actionView: ActionLabelView)
 }
-
+// create view for empty playlists 
 class ActionLabelView: UIView {
     
     weak var delegate: ActionLabelViewDelegate?
