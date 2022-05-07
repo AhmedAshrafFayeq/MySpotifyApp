@@ -66,6 +66,32 @@ class LibraryPlaylistsViewController: UIViewController {
 extension LibraryPlaylistsViewController: ActionLabelViewDelegate {
     func actionLabelViewDidTapButton(_ actionView: ActionLabelView) {
         // See creation UI
+        let alert = UIAlertController(
+            title: "New Playlist",
+            message: "Enter playlist name",
+            preferredStyle: .alert
+        )
+        alert.addTextField { textField in
+            textField.placeholder = "Playlist..."
+        }
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        alert.addAction(UIAlertAction(title: "Create", style: .default, handler: { _ in
+            guard let field = alert.textFields?.first,
+                  let text = field.text,
+                  !text.trimmingCharacters(in: .whitespaces).isEmpty else {
+                      return
+                  }
+            APICaller.shared.createPlaylist(with: text) { success in
+                if success {
+                    //refresh list of playlists
+                }
+                else {
+                    print("Failed to create playlist")
+                }
+            }
+        }))
+        present(alert, animated: true)
     }
     
 }
