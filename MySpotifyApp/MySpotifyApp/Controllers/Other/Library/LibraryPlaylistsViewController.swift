@@ -16,9 +16,29 @@ class LibraryPlaylistsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        
-        noPlaylistsView.configure(with: ActionLabelViewViewModel(text: "You don't have any playlists yet.", actionTitle: "Create"))
+        setupNoPlaylistsView()
+        fetchData()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        noPlaylistsView.frame = CGRect(x: 0, y: 0, width: 150, height: 150)
+        noPlaylistsView.center = view.center
+    }
+    
+    private func setupNoPlaylistsView() {
+        noPlaylistsView.configure(
+            with:
+                ActionLabelViewViewModel(
+                    text: "You don't have any playlists yet.",
+                    actionTitle: "Create"
+                )
+        )
         view.addSubviews(noPlaylistsView)
+        noPlaylistsView.delegate = self
+    }
+    
+    private func fetchData() {
         APICaller.shared.getCurrentUserPlaylists { [weak self] result in
             guard let self = self else { return }
             DispatchQueue.main.async {
@@ -33,12 +53,6 @@ class LibraryPlaylistsViewController: UIViewController {
         }
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        noPlaylistsView.frame = CGRect(x: 0, y: 0, width: 150, height: 150)
-        noPlaylistsView.center = view.center
-    }
-    
     private func updateUI() {
         if playlists.isEmpty {
             //show empty label
@@ -47,4 +61,11 @@ class LibraryPlaylistsViewController: UIViewController {
             // show table
         }
     }
+}
+
+extension LibraryPlaylistsViewController: ActionLabelViewDelegate {
+    func actionLabelViewDidTapButton(_ actionView: ActionLabelView) {
+        // See creation UI
+    }
+    
 }
