@@ -13,9 +13,20 @@ class LibraryPlaylistsViewController: UIViewController {
     
     private let noPlaylistsView = ActionLabelView()
     
+    private let tableView: UITableView = {
+        let tableView = UITableView()
+        tableView.register(SearchResultSubtitleTableViewCell.self,
+                           forCellReuseIdentifier: SearchResultSubtitleTableViewCell.identifier)
+        tableView.isHidden = true
+        return tableView
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
+        tableView.dataSource = self
+        tableView.delegate = self
+        view.addSubviews(tableView)
         setupNoPlaylistsView()
         fetchData()
     }
@@ -97,4 +108,30 @@ extension LibraryPlaylistsViewController: ActionLabelViewDelegate {
         showCreatePlaylistAlert()
     }
     
+}
+
+extension LibraryPlaylistsViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return playlists.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(
+            withIdentifier: SearchResultSubtitleTableViewCell.identifier,
+            for: indexPath
+        )as? SearchResultSubtitleTableViewCell else {
+            return UITableViewCell()
+        }
+        
+        let playlist = playlists[indexPath.row]
+        cell.configure(
+            with: SearchResultSubtitleTableViewCellViewModel(
+                title: playlist.name,
+                subtitle: playlist.owner.display_name,
+                imageURL: URL(string: playlist.images.first?.url ?? "")
+            )
+        )
+        
+        return cell
+    }
 }

@@ -95,7 +95,6 @@ final class APICaller {
                     ]
                     request.httpBody = try? JSONSerialization.data(withJSONObject: json, options: .fragmentsAllowed)
                     
-                    
                     URLSession.shared.dataTask(with: request) { data, _, error in
                         guard let data = data, error == nil else {
                             completion(false)
