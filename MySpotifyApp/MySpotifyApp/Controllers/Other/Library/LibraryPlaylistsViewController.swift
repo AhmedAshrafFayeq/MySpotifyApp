@@ -35,6 +35,7 @@ class LibraryPlaylistsViewController: UIViewController {
         super.viewDidLayoutSubviews()
         noPlaylistsView.frame = CGRect(x: 0, y: 0, width: 150, height: 150)
         noPlaylistsView.center = view.center
+        tableView.frame = view.bounds
     }
     
     private func setupNoPlaylistsView() {
@@ -68,8 +69,12 @@ class LibraryPlaylistsViewController: UIViewController {
         if playlists.isEmpty {
             //show empty label
             noPlaylistsView.isHidden = false
+            tableView.isHidden = true
         }else {
             // show table
+            tableView.reloadData()
+            noPlaylistsView.isHidden = true
+            tableView.isHidden = false
         }
     }
     
