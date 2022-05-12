@@ -112,8 +112,7 @@ class LibraryPlaylistsViewController: UIViewController {
 extension LibraryPlaylistsViewController: ActionLabelViewDelegate {
     func actionLabelViewDidTapButton(_ actionView: ActionLabelView) {
         showCreatePlaylistAlert()
-    }
-    
+    }    
 }
 
 extension LibraryPlaylistsViewController: UITableViewDelegate, UITableViewDataSource {
@@ -137,7 +136,6 @@ extension LibraryPlaylistsViewController: UITableViewDelegate, UITableViewDataSo
                 imageURL: URL(string: playlist.images.first?.url ?? "")
             )
         )
-        
         return cell
     }
     

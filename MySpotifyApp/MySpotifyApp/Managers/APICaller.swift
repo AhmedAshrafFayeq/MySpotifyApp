@@ -120,7 +120,35 @@ final class APICaller {
         playlist: Playlist,
         completion: @escaping (Bool) -> Void
     ) {
-        
+        createRequest(
+            with: URL(string: Constants.baseAPIURL + "/playlists/\(playlist.id)/tracks"),
+            type: .POST
+        ) { baseRequest in
+            var request = baseRequest
+            let json = [
+                "uris": "spotify:track:\(track.id)"
+            ]
+            request.httpBody = try? JSONSerialization.data(withJSONObject: json, options: .fragmentsAllowed)
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            URLSession.shared.dataTask(with: request) { data, _, error in
+                guard let data = data, error == nil else {
+                    completion(false)
+                    return
+                }
+                do{
+                    let result = try JSONSerialization.jsonObject(with: data, options: .fragmentsAllowed)
+                    
+                    if let response = result as? [String: Any],
+                       response["snapshot_id"] as? String != nil {
+                        completion(true)
+                    }
+                    print(result)
+                }catch{
+                    print(error.localizedDescription)
+                    completion(false)
+                }
+            }.resume()
+        }
     }
     public func removeTrackFromPlaylist(
         track: AudioTrack,
