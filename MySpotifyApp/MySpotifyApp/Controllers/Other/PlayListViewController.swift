@@ -10,6 +10,7 @@ import UIKit
 class PlayListViewController: UIViewController {
     
     private var playlist: Playlist
+    public var isOwner = false
     private var viewModels = [RecommendedTrackCellViewModel]()
     private var tracks = [AudioTrack]()
     
@@ -98,6 +99,14 @@ class PlayListViewController: UIViewController {
             barButtonSystemItem: .action,
             target: self,
             action: #selector(didTapShare))
+        
+        let gesture = UILongPressGestureRecognizer(target: self,
+                                                   action: #selector(didLongPress(_:)))
+        collectionView.addGestureRecognizer(gesture)
+    }
+    
+    @objc func didLongPress(_ gesture: UILongPressGestureRecognizer) {
+        
     }
     
     @objc private func didTapShare() {
