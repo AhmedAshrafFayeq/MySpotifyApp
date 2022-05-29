@@ -106,6 +106,9 @@ class PlayListViewController: UIViewController {
     }
     
     @objc func didLongPress(_ gesture: UILongPressGestureRecognizer) {
+        guard gesture.state == .began else {
+            return
+        }
         
     }
     
